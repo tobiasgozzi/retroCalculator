@@ -10,23 +10,26 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-
+    
     enum Operation: String {
         case Divide = "/"
         case Multiply = "*"
         case Subtract = "-"
         case Add = "+"
         case Empty = "Empty"
+        case clear = "clear"
     }
-    
-    @IBOutlet weak var labelOutput: UILabel!
-    var btnSound: AVAudioPlayer!
-    
+
     var runningNumber: String = ""
     var leftValStr = ""
     var rightValStr = ""
     var currentOperation: Operation = Operation.Empty
     var result = ""
+
+    
+    @IBOutlet weak var labelOutput: UILabel!
+    var btnSound: AVAudioPlayer!
+    
     
     
     override func viewDidLoad() {
@@ -42,8 +45,17 @@ class ViewController: UIViewController {
             print(error.debugDescription)
         }
         
+    }
+    
+    @IBAction func clearAll(sender: AnyObject){
+        playSound()
+        runningNumber = ""
+        leftValStr = ""
+        rightValStr = ""
+        currentOperation = Operation.Empty
+        result = ""
         
-
+        labelOutput.text = "0"
     }
     
     @IBAction func onPlusPressed(sender: AnyObject) {
@@ -111,9 +123,12 @@ class ViewController: UIViewController {
 
     func playSound() {
         if(btnSound.playing) {
+            print("sound playing")
             btnSound.stop()
         }
         btnSound.playing
+        print("sound wasn not playing but is now")
+
     }
 }
 
